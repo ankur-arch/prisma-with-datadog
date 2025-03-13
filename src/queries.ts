@@ -1,8 +1,12 @@
+import { tracer, x } from "./tracer";
 import { tracedPrisma } from "./client";
+
+console.log(x);
 
 const prisma = tracedPrisma;
 
 async function main() {
+  const span = tracer.startSpan("queries");
   // Create unique emails
   const user1Email = `alice${Date.now()}@prisma.io`;
   const user2Email = `bob${Date.now()}@prisma.io`;
@@ -75,6 +79,8 @@ async function main() {
   const alicePosts = await prisma.post.findMany({
     where: { author: { email: user1Email } },
   });
+
+  span.finish();
   // console.log("Alice's posts:", alicePosts);
 }
 
