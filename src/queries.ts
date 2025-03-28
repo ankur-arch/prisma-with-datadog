@@ -1,12 +1,6 @@
 import { tracer } from "./tracer";
 
 import { tracedPrisma as prisma } from "./client";
-import { BufferedMetricsLogger } from "datadog-metrics";
-
-const dogMetrics = new BufferedMetricsLogger({
-  prefix: "prisma.",
-  apiKey: "afd8a53e79abb1c429e4b38fec8a024a",
-});
 
 async function main() {
   // Create unique emails
