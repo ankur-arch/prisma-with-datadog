@@ -16,12 +16,16 @@ const provider = new tracer.TracerProvider();
 // Register the provider globally
 provider.register();
 
-// Register your auto-instrumentors
 registerInstrumentations({
   tracerProvider: provider,
-  instrumentations: [new PrismaInstrumentation()],
+  instrumentations: [
+    new PrismaInstrumentation({
+      middleware: true,
+      enabled: true,
+    }),
+  ],
 });
 
-const x = 2;
+export { tracer };
 
-export { tracer, x };
+console.log("Tracing logic executed");

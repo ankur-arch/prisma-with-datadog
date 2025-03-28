@@ -1,12 +1,14 @@
-import { tracer, x } from "./tracer";
-import { tracedPrisma } from "./client";
+import { tracer } from "./tracer";
 
-console.log(x);
+import { tracedPrisma as prisma } from "./client";
+import { BufferedMetricsLogger } from "datadog-metrics";
 
-const prisma = tracedPrisma;
+const dogMetrics = new BufferedMetricsLogger({
+  prefix: "prisma.",
+  apiKey: "afd8a53e79abb1c429e4b38fec8a024a",
+});
 
 async function main() {
-  const span = tracer.startSpan("queries");
   // Create unique emails
   const user1Email = `alice${Date.now()}@prisma.io`;
   const user2Email = `bob${Date.now()}@prisma.io`;
@@ -58,7 +60,6 @@ async function main() {
   const publishedPosts = await prisma.post.findMany({
     where: { published: true },
   });
-  // console.log("Published posts:", publishedPosts);
 
   // Create an unpublished post for Alice then publish it
   let post = await prisma.post.create({
@@ -79,8 +80,6 @@ async function main() {
   const alicePosts = await prisma.post.findMany({
     where: { author: { email: user1Email } },
   });
-
-  span.finish();
   // console.log("Alice's posts:", alicePosts);
 }
 

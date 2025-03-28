@@ -9,6 +9,7 @@
     "@prisma/extension-accelerate": "1.2.2",
     "@prisma/instrumentation": "^6.5.0",
     "@types/node": "22.13.10",
+    "datadog-metrics": "^0.12.1",
     "dd-trace": "^5.41.1",
     "dotenv": "16.4.7"
   },
