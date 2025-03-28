@@ -1,6 +1,6 @@
-import { tracedPrisma } from "./client";
+import { tracer } from "./tracer";
 
-const prisma = tracedPrisma;
+import { tracedPrisma as prisma } from "./client";
 
 async function main() {
   // Create unique emails
@@ -54,7 +54,6 @@ async function main() {
   const publishedPosts = await prisma.post.findMany({
     where: { published: true },
   });
-  // console.log("Published posts:", publishedPosts);
 
   // Create an unpublished post for Alice then publish it
   let post = await prisma.post.create({
