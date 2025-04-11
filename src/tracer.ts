@@ -1,4 +1,3 @@
-// tracer.js
 import Tracer from "dd-trace";
 import {
   PrismaInstrumentation,
@@ -22,10 +21,9 @@ registerInstrumentations({
     new PrismaInstrumentation({
       middleware: true,
       enabled: true,
+      ignoreSpanTypes: [],
     }),
   ],
 });
 
 export { tracer };
-
-console.log("Tracing logic executed");
