@@ -19,9 +19,7 @@ registerInstrumentations({
   tracerProvider: provider,
   instrumentations: [
     new PrismaInstrumentation({
-      middleware: true,
       enabled: true,
-      ignoreSpanTypes: [],
     }),
   ],
 });
