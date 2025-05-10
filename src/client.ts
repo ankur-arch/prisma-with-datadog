@@ -2,7 +2,7 @@
 import { tracer } from "./tracer";
 import { PrismaClient } from "../generated/client";
 
-const tracedPrisma = new PrismaClient({
+const prisma = new PrismaClient({
   log: [{ emit: "event", level: "query" }],
 }).$extends({
   query: {
@@ -18,17 +18,20 @@ const tracedPrisma = new PrismaClient({
           },
         }
       );
-      try {
-        const result = await query(args);
-        span.finish();
-        return result;
-      } catch (error) {
-        span.setTag("error", error);
-        span.finish();
-        throw error;
-      }
+
+      return await tracer.scope().activate(span, async () => {
+        try {
+          const result = await query(args);
+          span.finish();
+          return result;
+        } catch (error) {
+          span.setTag("error", error);
+          span.finish();
+          throw error;
+        }
+      });
     },
   },
 });
 
-export { tracedPrisma };
+export { prisma };

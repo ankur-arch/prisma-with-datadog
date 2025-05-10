@@ -1,6 +1,4 @@
-import { tracer } from "./tracer";
-
-import { tracedPrisma as prisma } from "./client";
+import { prisma } from "./client";
 
 async function main() {
   // Create unique emails
